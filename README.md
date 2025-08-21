@@ -1,7 +1,7 @@
 # 🛒 E-Commerce System
 
-[![CI Pipeline](https://github.com/TU_USUARIO/ecommerce-system/actions/workflows/ci.yml/badge.svg)](https://github.com/TU_USUARIO/ecommerce-system/actions/workflows/ci.yml)
-[![Docker Images](https://github.com/TU_USUARIO/ecommerce-system/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/TU_USUARIO/ecommerce-system/actions/workflows/docker-publish.yml)
+[![CI Pipeline](https://github.com/mateo991231/ecommerce-system/actions/workflows/ci.yml/badge.svg)](https://github.com/TU_USUARIO/ecommerce-system/actions/workflows/ci.yml)
+[![Docker Images](https://github.com/mateo991231/ecommerce-system/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/TU_USUARIO/ecommerce-system/actions/workflows/docker-publish.yml)
 
 Sistema de e-commerce completo desarrollado con **Spring Boot** y **React**, que incluye gestión de productos, inventarios, órdenes y sistema de descuentos.
 
@@ -13,7 +13,7 @@ Sistema de e-commerce completo desarrollado con **Spring Boot** y **React**, que
 
 ### Instalación
 ```bash
-git clone https://github.com/TU_USUARIO/ecommerce-system.git
+git clone https://github.com/mateo991231/ecommerce-system.git
 cd ecommerce-system
 docker-compose up -d
 ```
@@ -158,7 +158,7 @@ El proyecto incluye pipelines automatizados que se ejecutan en cada push:
 ### Configuración Local
 ```bash
 # Clonar repositorio
-git clone https://github.com/TU_USUARIO/ecommerce-system.git
+git clone https://github.com/mateo991231/ecommerce-system.git
 cd ecommerce-system
 
 # Ejecutar con Docker
@@ -188,8 +188,8 @@ SPRING_DATASOURCE_PASSWORD=postgres
 docker-compose -f docker-compose.prod.yml up -d
 
 # O usar imágenes publicadas
-docker pull tuusuario/ecommerce-backend:latest
-docker pull tuusuario/ecommerce-frontend:latest
+docker pull mateo991231/ecommerce-backend:latest
+docker pull mateo991231/ecommerce-frontend:latest
 ```
 
 ## 🤝 Contribución
@@ -207,12 +207,4 @@ Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) par
 ## 👨‍💻 Autor
 
 **Tu Nombre**
-- GitHub: [@TU_USUARIO](https://github.com/TU_USUARIO)
-- LinkedIn: [Tu LinkedIn](https://linkedin.com/in/tu-perfil)
-
-## 🙏 Agradecimientos
-
-- Spring Boot Team
-- React Team
-- Material-UI Team
-- Docker Team
+- Mateo Quintero Acevedo
