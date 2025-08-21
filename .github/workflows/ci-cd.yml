@@ -55,6 +55,14 @@ jobs:
         cd backend
         ./mvnw jacoco:report
         
+    - name: Display Coverage Summary
+      run: |
+        cd backend
+        echo "📊 Backend Coverage Summary:"
+        if [ -f target/site/jacoco/index.html ]; then
+          grep -o '[0-9]*%' target/site/jacoco/index.html | head -4 | paste -sd ' ' - || echo "Coverage data generated"
+        fi
+        
     - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
