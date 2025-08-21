@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DiscountService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ecommerce-backend</a> &gt; <a href="index.source.html" class="el_package">com.ecommerce.service</a> &gt; <span class="el_source">DiscountService.java</span></div><h1>DiscountService.java</h1><pre class="source lang-java linenums">package com.ecommerce.service;
+
+import com.ecommerce.entity.DiscountConfig;
+import com.ecommerce.entity.User;
+import com.ecommerce.repository.DiscountConfigRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
+@Service
+<span class="fc" id="L13">public class DiscountService {</span>
+    @Autowired
+    private DiscountConfigRepository discountConfigRepository;
+
+    public BigDecimal calculateDiscount(BigDecimal totalAmount, boolean isRandomOrder, User user) {
+<span class="fc" id="L18">        BigDecimal discountPercentage = BigDecimal.ZERO;</span>
+        
+        // Frequent customer discount (5%) - always applies
+<span class="fc bfc" id="L21" title="All 2 branches covered.">        if (user.getIsFrequentCustomer()) {</span>
+<span class="fc" id="L22">            discountPercentage = discountPercentage.add(BigDecimal.valueOf(5.0));</span>
+        }
+        
+        // Time-based and random discounts only apply if config is active
+<span class="fc" id="L26">        DiscountConfig config = discountConfigRepository.findActiveDiscountConfig().orElse(null);</span>
+<span class="fc bfc" id="L27" title="All 4 branches covered.">        if (config != null &amp;&amp; config.isWithinDiscountPeriod(LocalDateTime.now())) {</span>
+            // Random order discount (50%) - exclusive with time discount
+<span class="fc bfc" id="L29" title="All 2 branches covered.">            if (isRandomOrder) {</span>
+<span class="fc" id="L30">                discountPercentage = discountPercentage.add(config.getRandomDiscountPercentage());</span>
+            } else {
+                // Time-based discount (10%) - only if not random
+<span class="fc" id="L33">                discountPercentage = discountPercentage.add(config.getTimeDiscountPercentage());</span>
+            }
+        }
+
+<span class="fc" id="L37">        return totalAmount.multiply(discountPercentage.divide(BigDecimal.valueOf(100)));</span>
+    }
+
+    public DiscountConfig getActiveDiscountConfig() {
+<span class="nc" id="L41">        return discountConfigRepository.findActiveDiscountConfig().orElse(null);</span>
+    }
+
+    public DiscountConfig updateDiscountConfig(DiscountConfig config) {
+<span class="nc" id="L45">        return discountConfigRepository.save(config);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

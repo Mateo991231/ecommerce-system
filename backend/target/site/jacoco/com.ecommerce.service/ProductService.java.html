@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ProductService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ecommerce-backend</a> &gt; <a href="index.source.html" class="el_package">com.ecommerce.service</a> &gt; <span class="el_source">ProductService.java</span></div><h1>ProductService.java</h1><pre class="source lang-java linenums">package com.ecommerce.service;
+
+import com.ecommerce.dto.ProductRequest;
+import com.ecommerce.entity.Product;
+import com.ecommerce.repository.ProductRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.math.BigDecimal;
+import java.util.List;
+
+@Service
+@Transactional
+<span class="fc" id="L18">public class ProductService {</span>
+    @Autowired
+    private ProductRepository productRepository;
+
+    @Autowired
+    private AuditService auditService;
+
+    public Product createProduct(ProductRequest request) {
+<span class="fc" id="L26">        Product product = new Product(request.getName(), request.getDescription(),</span>
+<span class="fc" id="L27">                request.getPrice(), request.getCategory(), request.getStock());</span>
+        
+<span class="fc" id="L29">        Product savedProduct = productRepository.save(product);</span>
+<span class="fc" id="L30">        auditService.logAction(&quot;Product&quot;, savedProduct.getId(), &quot;CREATE&quot;, null, null, savedProduct.toString());</span>
+<span class="fc" id="L31">        return savedProduct;</span>
+    }
+
+    public Page&lt;Product&gt; getAllProducts(Pageable pageable) {
+<span class="nc" id="L35">        return productRepository.findByIsActiveTrue(pageable);</span>
+    }
+
+    public Product getProductById(Long id) {
+<span class="fc" id="L39">        return productRepository.findById(id)</span>
+<span class="fc" id="L40">                .orElseThrow(() -&gt; new RuntimeException(&quot;Product not found with id: &quot; + id));</span>
+    }
+
+    public Product updateProduct(Long id, ProductRequest request) {
+<span class="nc" id="L44">        Product product = getProductById(id);</span>
+<span class="nc" id="L45">        String oldValues = product.toString();</span>
+        
+<span class="nc" id="L47">        product.setName(request.getName());</span>
+<span class="nc" id="L48">        product.setDescription(request.getDescription());</span>
+<span class="nc" id="L49">        product.setPrice(request.getPrice());</span>
+<span class="nc" id="L50">        product.setCategory(request.getCategory());</span>
+<span class="nc" id="L51">        product.setStock(request.getStock());</span>
+        
+<span class="nc" id="L53">        Product updatedProduct = productRepository.save(product);</span>
+<span class="nc" id="L54">        auditService.logAction(&quot;Product&quot;, id, &quot;UPDATE&quot;, null, oldValues, updatedProduct.toString());</span>
+<span class="nc" id="L55">        return updatedProduct;</span>
+    }
+
+    public void deleteProduct(Long id) {
+<span class="nc" id="L59">        Product product = getProductById(id);</span>
+<span class="nc" id="L60">        product.setIsActive(false);</span>
+<span class="nc" id="L61">        productRepository.save(product);</span>
+<span class="nc" id="L62">        auditService.logAction(&quot;Product&quot;, id, &quot;DELETE&quot;, null, product.toString(), null);</span>
+<span class="nc" id="L63">    }</span>
+
+    public Page&lt;Product&gt; searchProducts(String name, String category, BigDecimal minPrice, BigDecimal maxPrice, Pageable pageable) {
+<span class="nc" id="L66">        return productRepository.searchProducts(name, category, minPrice, maxPrice, pageable);</span>
+    }
+
+    public List&lt;Object[]&gt; getTopSellingProducts() {
+<span class="nc" id="L70">        return productRepository.findTopSellingProducts(PageRequest.of(0, 5));</span>
+    }
+
+    public List&lt;Product&gt; getActiveProducts() {
+<span class="nc" id="L74">        return productRepository.findByIsActiveTrue();</span>
+    }
+
+    public void updateStock(Long productId, Integer quantity) {
+<span class="fc" id="L78">        Product product = getProductById(productId);</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">        if (product.getStock() &lt; quantity) {</span>
+<span class="fc" id="L80">            throw new RuntimeException(&quot;No hay stock suficiente para el producto: &quot; + product.getName() + &quot;. Stock disponible: &quot; + product.getStock());</span>
+        }
+<span class="fc" id="L82">        product.setStock(product.getStock() - quantity);</span>
+<span class="fc" id="L83">        productRepository.save(product);</span>
+<span class="fc" id="L84">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
