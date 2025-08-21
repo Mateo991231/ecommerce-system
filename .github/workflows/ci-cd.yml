@@ -55,6 +55,23 @@ jobs:
         cd backend
         ./mvnw jacoco:report
         
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        cache: 'npm'
+        cache-dependency-path: frontend/package-lock.json
+        
+    - name: Install Frontend Dependencies
+      run: |
+        cd frontend
+        npm ci
+        
+    - name: Run Frontend Tests
+      run: |
+        cd frontend
+        npm test -- --coverage --watchAll=false
+        
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v3
       with:

@@ -1,7 +1,6 @@
 # 🛒 E-Commerce System
 
-[![CI Pipeline](https://github.com/mateo991231/ecommerce-system/actions/workflows/ci.yml/badge.svg)](https://github.com/TU_USUARIO/ecommerce-system/actions/workflows/ci.yml)
-[![Docker Images](https://github.com/mateo991231/ecommerce-system/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/TU_USUARIO/ecommerce-system/actions/workflows/docker-publish.yml)
+[![CI/CD Pipeline](https://github.com/Mateo991231/ecommerce-system/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/Mateo991231/ecommerce-system/actions/workflows/ci-cd.yml)
 
 Sistema de e-commerce completo desarrollado con **Spring Boot** y **React**, que incluye gestión de productos, inventarios, órdenes y sistema de descuentos.
 
@@ -13,7 +12,7 @@ Sistema de e-commerce completo desarrollado con **Spring Boot** y **React**, que
 
 ### Instalación
 ```bash
-git clone https://github.com/mateo991231/ecommerce-system.git
+git clone https://github.com/Mateo991231/ecommerce-system.git
 cd ecommerce-system
 docker-compose up -d
 ```
@@ -158,7 +157,7 @@ El proyecto incluye pipelines automatizados que se ejecutan en cada push:
 ### Configuración Local
 ```bash
 # Clonar repositorio
-git clone https://github.com/mateo991231/ecommerce-system.git
+git clone https://github.com/Mateo991231/ecommerce-system.git
 cd ecommerce-system
 
 # Ejecutar con Docker
