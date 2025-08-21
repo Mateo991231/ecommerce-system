@@ -1,7 +1,5 @@
 -- Database schema for E-commerce System
-CREATE DATABASE ecommerce_db;
-
-\c ecommerce_db;
+-- Database ecommerce_db is created automatically by docker-compose
 
 -- Users table
 CREATE TABLE users (

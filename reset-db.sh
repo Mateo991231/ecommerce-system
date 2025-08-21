@@ -1,13 +1,16 @@
 #!/bin/bash
 
-echo "🔄 Reseteando base de datos con datos iniciales..."
+echo "🔄 Reconstruyendo aplicación con código más reciente..."
 
-# Parar contenedores y eliminar volúmenes
-docker-compose down -v
+# Parar contenedores, eliminar volúmenes e imágenes
+docker-compose down -v --rmi all
 
-# Reiniciar con datos frescos
+# Reconstruir imágenes sin cache
+docker-compose build --no-cache
+
+# Iniciar con código y datos frescos
 docker-compose up -d
 
-echo "✅ Base de datos reseteada con datos iniciales"
+echo "✅ Aplicación reconstruida con código y datos frescos"
 echo "🌐 Accede a: http://localhost"
 echo "👤 Usuario: admin | Contraseña: admin123"
